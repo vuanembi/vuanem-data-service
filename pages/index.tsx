@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import { HStack } from '@chakra-ui/react';
+import { FaDatabase, FaTable } from 'react-icons/fa';
 
 import List from '../components/List';
 
@@ -16,19 +17,21 @@ type Dataset = {
 };
 
 const Home: NextPage = () => {
-    const [datasets, setDatasets] = useState([]);
+    const [datasets, setDatasets] = useState<Dataset[]>([]);
     const [selectedDataset, selectDataset] = useState('');
 
-    const [tables, setTables] = useState([]);
+    const [tables, setTables] = useState<Table[]>([]);
     const [selectedTable, selectTable] = useState('');
 
     useEffect(() => {
-        axios.get('/api/datasets').then(({ data }) => setDatasets(data));
+        axios
+            .get<Dataset[]>('/api/datasets')
+            .then(({ data }) => setDatasets(data));
     }, []);
 
     useEffect(() => {
         axios
-            .get('/api/dataset', { params: { id: selectedDataset } })
+            .get<Table[]>('/api/dataset', { params: { id: selectedDataset } })
             .then(({ data }) => setTables(data));
     }, [selectedDataset]);
 
@@ -39,9 +42,17 @@ const Home: NextPage = () => {
             alignItems="flex-start"
             spacing={10}
         >
-            <List items={datasets} handleSelect={selectDataset} />
-            <List items={tables} handleSelect={selectTable} />
-            <List items={datasets} handleSelect={selectDataset} />
+            <List
+                items={datasets}
+                icon={FaDatabase}
+                handleSelect={selectDataset}
+            />
+            <List items={tables} icon={FaTable} handleSelect={selectTable} />
+            <List
+                items={datasets}
+                icon={FaDatabase}
+                handleSelect={selectDataset}
+            />
         </HStack>
     );
 };

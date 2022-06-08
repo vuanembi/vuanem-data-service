@@ -1,16 +1,18 @@
 import { FC, useState, useEffect, Dispatch, SetStateAction } from 'react';
 
 import { VStack } from '@chakra-ui/react';
+import { IconType } from 'react-icons';
 
 import ListItem, { ListItemType } from './ListItem';
 import Search from './Search';
 
 type ListProps = {
     items: ListItemType[];
+    icon: IconType;
     handleSelect: Dispatch<SetStateAction<string>>;
 };
 
-const List: FC<ListProps> = ({ items, handleSelect }) => {
+const List: FC<ListProps> = ({ items, icon, handleSelect }) => {
     const [itemList, setItemList] = useState(items);
     const [searchTerm, setSearchTerm] = useState('');
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -28,6 +30,7 @@ const List: FC<ListProps> = ({ items, handleSelect }) => {
                     <ListItem
                         key={i}
                         item={item}
+                        icon={icon}
                         active={i === activeIndex ? true : false}
                         setActiveIndex={() => setActiveIndex(i)}
                         setSelection={handleSelect}
