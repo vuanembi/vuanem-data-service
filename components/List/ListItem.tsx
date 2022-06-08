@@ -1,12 +1,6 @@
-import { FC, Dispatch, SetStateAction, useRef } from 'react';
+import { FC, Dispatch, SetStateAction } from 'react';
 
-import {
-    HStack,
-    Icon,
-    Text,
-    useOutsideClick,
-    useBoolean,
-} from '@chakra-ui/react';
+import { HStack, Icon, Text } from '@chakra-ui/react';
 import { FiDatabase, FiChevronRight } from 'react-icons/fi';
 
 export type ListItemType = {
@@ -15,26 +9,24 @@ export type ListItemType = {
 
 export type ListItemProps = {
     item: ListItemType;
+    active: boolean;
+    setActiveIndex: () => void;
     setSelection: Dispatch<SetStateAction<string>>;
 };
 
-const ListItem: FC<ListItemProps> = ({ item, setSelection }) => {
-    const ref = useRef(null);
-
-    const [selected, setSelected] = useBoolean();
-
-    useOutsideClick({
-        ref,
-        handler: () => setSelected.off(),
-    });
-
+const ListItem: FC<ListItemProps> = ({
+    item,
+    active,
+    setActiveIndex,
+    setSelection,
+}) => {
     const onClick = () => {
         setSelection(item.id);
-        setSelected.on();
+        setActiveIndex();
     };
 
-    const bgColor = selected ? 'blue.600' : 'transparent';
-    const textColor = selected ? 'white' : 'black';
+    const bgColor = active ? 'blue.600' : 'transparent';
+    const textColor = active ? 'white' : 'black';
 
     return (
         <HStack

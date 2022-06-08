@@ -1,31 +1,36 @@
 import type { NextPage } from 'next';
 import { useEffect, useState } from 'react';
-import useSWR from 'swr';
+import axios from 'axios';
 
 import { HStack } from '@chakra-ui/react';
 
 import List from '../components/List';
 
-import fetcher from '../lib/api';
+type Table = {
+    id: string;
+};
 
 type Dataset = {
     id: string;
-    tables: {
-        id: string;
-    }[];
+    tables: Table[];
 };
 
 const Home: NextPage = () => {
-    const [dataset, setDataset] = useState('');
-    
-    const { data: datasets, error } = useSWR<Dataset[]>(
-        { url: '/api/dataset' },
-        fetcher
-    );
+    const [datasets, setDatasets] = useState([]);
+    const [selectedDataset, selectDataset] = useState('');
 
-    useEffect(() => console.log(dataset), [dataset]);
+    const [tables, setTables] = useState([]);
+    const [selectedTable, selectTable] = useState('');
 
-    if (error || !datasets) return <h1>Hehe</h1>;
+    useEffect(() => {
+        axios.get('/api/datasets').then(({ data }) => setDatasets(data));
+    }, []);
+
+    useEffect(() => {
+        axios
+            .get('/api/dataset', { params: { id: selectedDataset } })
+            .then(({ data }) => setTables(data));
+    }, [selectedDataset]);
 
     return (
         <HStack
@@ -34,9 +39,9 @@ const Home: NextPage = () => {
             alignItems="flex-start"
             spacing={10}
         >
-            <List items={datasets} handleSelect={setDataset} />
-            <List items={datasets} handleSelect={setDataset} />
-            <List items={datasets} handleSelect={setDataset} />
+            <List items={datasets} handleSelect={selectDataset} />
+            <List items={tables} handleSelect={selectTable} />
+            <List items={datasets} handleSelect={selectDataset} />
         </HStack>
     );
 };

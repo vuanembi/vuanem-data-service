@@ -13,18 +13,25 @@ type ListProps = {
 const List: FC<ListProps> = ({ items, handleSelect }) => {
     const [itemList, setItemList] = useState(items);
     const [searchTerm, setSearchTerm] = useState('');
+    const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-    useEffect(
-        () => setItemList(items.filter(({ id }) => id.match(searchTerm))),
-        [items, searchTerm]
-    );
+    useEffect(() => {
+        setItemList(items.filter(({ id }) => id.match(searchTerm)));
+        setActiveIndex(null);
+    }, [items, searchTerm]);
 
     return (
         <VStack maxH="full" w="full" alignItems="stretch">
             <Search onChange={(e) => setSearchTerm(e.target.value)} />
             <VStack overflowY="auto">
                 {itemList.map((item, i) => (
-                    <ListItem key={i} item={item} setSelection={handleSelect} />
+                    <ListItem
+                        key={i}
+                        item={item}
+                        active={i === activeIndex ? true : false}
+                        setActiveIndex={() => setActiveIndex(i)}
+                        setSelection={handleSelect}
+                    />
                 ))}
             </VStack>
         </VStack>
