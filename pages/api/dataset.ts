@@ -7,9 +7,9 @@ export type Table = {
 };
 
 const handler = (req: NextApiRequest, res: NextApiResponse<Table[]>) => {
-    const tables = mock.dataset.find(({id}) => id === req.query.id)?.tables;
+    const tables = mock.dataset.find(({ id }) => id === req.query.id)?.tables;
 
-    tables ? res.send(tables) : res.status(404).end();
+    tables ? res.json(tables) : res.status(404).end();
 };
 
 export default handler;

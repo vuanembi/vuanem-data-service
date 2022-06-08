@@ -6,6 +6,7 @@ import { HStack } from '@chakra-ui/react';
 import { FaDatabase, FaTable } from 'react-icons/fa';
 
 import List from '../components/List';
+import Workbench from '../components/Workbench';
 
 type Table = {
     id: string;
@@ -48,11 +49,7 @@ const Home: NextPage = () => {
                 handleSelect={selectDataset}
             />
             <List items={tables} icon={FaTable} handleSelect={selectTable} />
-            <List
-                items={datasets}
-                icon={FaDatabase}
-                handleSelect={selectDataset}
-            />
+            <Workbench table={selectedTable} />
         </HStack>
     );
 };
