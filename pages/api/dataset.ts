@@ -1,15 +1,15 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { Table } from './table';
 import mock from './mock.json';
 
-type Dataset = {
+export type Table = {
     id: string;
-    tables: Table[];
 };
 
-const handler = (req: NextApiRequest, res: NextApiResponse<Dataset[]>) => {
-    res.json(mock.dataset);
+const handler = (req: NextApiRequest, res: NextApiResponse<Table[]>) => {
+    const tables = mock.dataset.find(({id}) => id === req.query.id)?.tables;
+
+    tables ? res.send(tables) : res.status(404).end();
 };
 
-export default handler
+export default handler;
