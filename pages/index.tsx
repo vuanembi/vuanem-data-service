@@ -2,11 +2,11 @@ import type { NextPage } from 'next';
 import { useState } from 'react';
 import useSWR from 'swr';
 
-import { HStack, Icon, Text } from '@chakra-ui/react';
+import { HStack } from '@chakra-ui/react';
 
-import List from '../components/List/List';
+import List from '../components/List';
 
-import fetcher from '../lib/fetcher';
+import fetcher from '../lib/api';
 
 type Dataset = {
     id: string;
@@ -18,12 +18,16 @@ type Dataset = {
 const Home: NextPage = () => {
     const { data, error } = useSWR<Dataset[]>({ url: '/api/dataset' }, fetcher);
     const [dataset, setDataset] = useState(data && data[0]);
-    
-    if (error) return <h1>Hehe</h1>;
-    
+
+    if (error || !data) return <h1>Hehe</h1>;
 
     return (
-        <HStack w="full" alignContent="space-between" spacing={10}>
+        <HStack
+            height="full"
+            alignContent="space-between"
+            alignItems="flex-start"
+            spacing={10}
+        >
             <List items={data} />
             <List items={data} />
             <List items={data} />

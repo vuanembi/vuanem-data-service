@@ -1,9 +1,9 @@
 import { FC, PropsWithChildren } from 'react';
 
-import { Center, Container } from '@chakra-ui/react';
+import { Container } from '@chakra-ui/react';
 
 const Layout: FC<PropsWithChildren> = ({ children }) => (
-    <Container w="90%" h="90%" mt={20}>
+    <Container h="100vh" w="100vw" pt="10vh" pb="10vh">
         {children}
     </Container>
 );
