@@ -46,7 +46,7 @@ const ListItem: FC<ListItemProps> = ({ item, setSelection }) => {
             onClick={onClick}
         >
             <Icon as={FiDatabase} stroke={textColor} />
-            <Text flex="1" color={textColor}>
+            <Text userSelect="none" flex="1" color={textColor}>
                 {item.id}
             </Text>
             <Icon as={FiChevronRight} stroke={textColor} />
