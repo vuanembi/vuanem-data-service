@@ -25,17 +25,6 @@ const Workbench: FC<WorkbenchProps> = ({ dataset, table }) => {
     const toast = useToast();
 
     useEffect(() => {
-        results &&
-            toast({
-                title: 'Link Generated',
-                description: 'Link will be valid for 1 hour',
-                status: 'success',
-                duration: 4000,
-                isClosable: true,
-            });
-    }, [toast, results]);
-
-    useEffect(() => {
         dataset && table && setDisabled(false);
     }, [dataset, table]);
 
@@ -52,6 +41,15 @@ const Workbench: FC<WorkbenchProps> = ({ dataset, table }) => {
                         url: data.url,
                     },
                 ])
+            )
+            .then(() =>
+                toast({
+                    title: 'Link Generated',
+                    description: 'Link will be valid for 1 hour',
+                    status: 'success',
+                    duration: 4000,
+                    isClosable: true,
+                })
             )
             .finally(() => setLoading(false));
     };
