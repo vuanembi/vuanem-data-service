@@ -34,12 +34,12 @@ const Workbench: FC<WorkbenchProps> = ({ dataset, table }) => {
             .post<{ url: string }>('/export', { dataset, table })
             .then(({ data }) =>
                 setResults([
-                    ...results,
                     {
                         title: title(),
                         timestamp: dayjs(),
                         url: data.url,
                     },
+                    ...results,
                 ])
             )
             .then(() =>
