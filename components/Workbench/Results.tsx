@@ -3,7 +3,7 @@ import { FC, useEffect, useState } from 'react';
 import {
     VStack,
     HStack,
-    Collapse,
+    Fade,
     Button,
     Divider,
     Link,
@@ -34,7 +34,7 @@ const Result: FC<ResultProps> = ({ title, timestamp, url }) => {
     }, [timestamp, currentTimestamp]);
 
     return (
-        <Collapse in={!!url}>
+        <Fade in={!!url}>
             <VStack justifyContent="flex-end" alignItems="stretch">
                 <Heading as="h3" size="sm">
                     {title}
@@ -52,7 +52,7 @@ const Result: FC<ResultProps> = ({ title, timestamp, url }) => {
                     </Link>
                 </HStack>
             </VStack>
-        </Collapse>
+        </Fade>
     );
 };
 
@@ -65,7 +65,7 @@ const Results: FC<{ results: ResultProps[] }> = ({ results }) => (
         divider={<Divider />}
         overflowY="auto"
     >
-        {[...results, ...results, ...results, ...results, ...results].map(
+        {results.map(
             (result, i) => (
                 <Result key={i} {...result} />
             )
