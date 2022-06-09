@@ -1,6 +1,8 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 
-const fetcher = (config: AxiosRequestConfig) =>
-    axios(config).then((res) => res.data);
+const apiClient = () =>
+    axios.create({
+        baseURL: '/api',
+    });
 
-export default fetcher;
+export default apiClient;

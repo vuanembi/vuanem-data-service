@@ -95,9 +95,10 @@ const handler = (
 
     if (!dataset || !table) {
         res.status(401).end();
+        return;
     }
 
-    createExportJob(<string>dataset, <string>table)
+    createExportJob(dataset, table)
         .then((url) => res.json({ url }))
         .catch((err) => res.status(500).send(err));
 };

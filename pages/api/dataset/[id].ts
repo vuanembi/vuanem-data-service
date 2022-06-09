@@ -25,7 +25,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
     req.query.id
         ? listTables(<string>req.query.id)
               .then((tables) => res.json(tables))
-              .then(() => res.json([]))
+              .catch(() => res.json([]))
         : res.status(404).end();
 };
 

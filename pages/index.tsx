@@ -1,48 +1,45 @@
 import type { NextPage } from 'next';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 
 import { HStack } from '@chakra-ui/react';
 import { FaDatabase, FaTable, FaChartBar } from 'react-icons/fa';
 import { SiGooglesheets } from 'react-icons/si';
 
 import type { Dataset, Table } from '../common/bigquery';
-
+import apiClient from '../lib/api';
 import List from '../components/List';
 import Workbench from '../components/Workbench';
 
 const Home: NextPage = () => {
     const [datasets, setDatasets] = useState<Dataset[]>([]);
-    const [datasetsLoading, setDatasetsLoading] = useState(false);
-    const [selectedDataset, selectDataset] = useState('');
+    const [datasetsLoaded, setDatasetsLoaded] = useState(false);
+    const [selectedDataset, selectDataset] = useState<string>('');
 
     const [tables, setTables] = useState<Table[]>([]);
-    const [tablesLoading, setTablesLoading] = useState(false);
-    const [selectedTable, selectTable] = useState('');
+    const [tablesLoaded, setTablesLoaded] = useState(true);
+    const [selectedTable, selectTable] = useState<string>('');
 
     useEffect(() => {
-        axios.get<Dataset[]>('/api/dataset').then(({ data }) => {
-            setDatasets(data);
-            setDatasetsLoading(true);
-        });
+        apiClient()
+            .get<Dataset[]>('/dataset')
+            .then(({ data }) => {
+                setDatasets(data);
+                setDatasetsLoaded(true);
+            });
     }, []);
 
     useEffect(() => {
-        setTablesLoading(false);
-        axios
-            .get<Table[]>(`/api/dataset/${selectedDataset}`)
-            .then(({ data }) => {
-                setTables(data);
-                setTablesLoading(true);
-            });
+        setTablesLoaded(false);
+        selectedDataset &&
+            apiClient()
+                .get<Table[]>(`/dataset/${selectedDataset}`)
+                .then(({ data }) => {
+                    setTables(data);
+                    setTablesLoaded(true);
+                })
+                .finally(() => setTablesLoaded(true));
+        !selectedDataset && setTablesLoaded(true);
     }, [selectedDataset]);
-
-    const tableIconFn = ({ type }: Table) =>
-        type === 'TABLE'
-            ? FaTable
-            : type === 'VIEW'
-            ? FaChartBar
-            : SiGooglesheets;
 
     return (
         <HStack
@@ -51,17 +48,23 @@ const Home: NextPage = () => {
             alignItems="flex-start"
             spacing={10}
         >
-            <List<Dataset>
+            <List
                 items={datasets}
                 iconFn={() => FaDatabase}
-                loading={datasetsLoading}
+                loading={datasetsLoaded}
                 handleSelect={selectDataset}
             />
-            <List<Table>
+            <List
                 items={tables}
                 // @ts-expect-error
-                iconFn={tableIconFn}
-                loading={tablesLoading}
+                iconFn={({ type }: Table) =>
+                    type === 'TABLE'
+                        ? FaTable
+                        : type === 'VIEW'
+                        ? FaChartBar
+                        : SiGooglesheets
+                }
+                loading={tablesLoaded}
                 handleSelect={selectTable}
             />
             <Workbench table={selectedTable} />
