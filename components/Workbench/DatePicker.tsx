@@ -15,7 +15,7 @@ import {
     SelectRangeEventHandler,
 } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
-import { formatISO } from 'date-fns';
+import { formatISO, getYear } from 'date-fns';
 
 import { FaRegCalendarAlt } from 'react-icons/fa';
 
@@ -51,7 +51,7 @@ const PopoverDatePicker: FC<DatePickerProps> = ({ range, setRange }) => {
                     <DayPicker
                         mode="range"
                         fromYear={2018}
-                        toYear={2023}
+                        toYear={getYear(new Date())}
                         captionLayout="dropdown"
                         selected={range}
                         onSelect={setRange}
