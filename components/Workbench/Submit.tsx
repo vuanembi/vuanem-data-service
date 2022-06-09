@@ -14,14 +14,14 @@ import { FaCloudUploadAlt } from 'react-icons/fa';
 
 import PopoverDatePicker, { defaultDateRange } from './DatePicker';
 
-type RequestProps = {
+type SubmitProps = {
     title: string;
     disabled: boolean;
     loading: boolean;
     onClick: MouseEventHandler;
 };
 
-const Request: FC<RequestProps> = ({ title, disabled, loading, onClick }) => {
+const Submit: FC<SubmitProps> = ({ title, disabled, loading, onClick }) => {
     const [range, setRange] = useState<DateRange | undefined>(defaultDateRange);
 
     return (
@@ -53,4 +53,4 @@ const Request: FC<RequestProps> = ({ title, disabled, loading, onClick }) => {
         </VStack>
     );
 };
-export default Request;
+export default Submit;

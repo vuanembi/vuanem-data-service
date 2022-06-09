@@ -1,10 +1,14 @@
 import { FC, useEffect, useState } from 'react';
 
-import { VStack } from '@chakra-ui/react';
+import { VStack, useToast } from '@chakra-ui/react';
+
+import dayjs from 'dayjs';
+import { format } from 'date-fns';
 
 import apiClient from '../../lib/api';
-import Request from './Request';
-import Result from './Result';
+import Submit from './Submit';
+import Result from './Results';
+import type { ResultProps } from './Results';
 
 type WorkbenchProps = {
     dataset: string;
@@ -14,10 +18,24 @@ type WorkbenchProps = {
 const Workbench: FC<WorkbenchProps> = ({ dataset, table }) => {
     const [disabled, setDisabled] = useState(true);
     const [loading, setLoading] = useState(false);
-    const [url, setUrl] = useState('');
+    const [results, setResults] = useState<ResultProps[]>([]);
+
+    const title = () => `${dataset}.${table}`.slice(0, 30);
+
+    const toast = useToast();
 
     useEffect(() => {
-        console.log({ dataset, table });
+        results &&
+            toast({
+                title: 'Link Generated',
+                description: 'Link will be valid for 1 hour',
+                status: 'success',
+                duration: 4000,
+                isClosable: true,
+            });
+    }, [toast, results]);
+
+    useEffect(() => {
         dataset && table && setDisabled(false);
     }, [dataset, table]);
 
@@ -25,19 +43,28 @@ const Workbench: FC<WorkbenchProps> = ({ dataset, table }) => {
         setLoading(true);
         apiClient()
             .post<{ url: string }>('/export', { dataset, table })
-            .then(({ data }) => setUrl(data.url))
+            .then(({ data }) =>
+                setResults([
+                    ...results,
+                    {
+                        title: title(),
+                        timestamp: dayjs(),
+                        url: data.url,
+                    },
+                ])
+            )
             .finally(() => setLoading(false));
     };
 
     return (
-        <VStack w="full" flex="0 0 33%" alignItems="stretch">
-            <Request
-                title={dataset && table ? `${dataset}.${table}` : '...'}
+        <VStack maxH="full" flex="0 0 33%" alignItems="stretch">
+            <Submit
+                title={dataset && table ? title() : '...'}
                 disabled={disabled}
                 loading={loading}
                 onClick={handleRequest}
             />
-            <Result url={url} />
+            <Result results={results} />
         </VStack>
     );
 };
