@@ -12,6 +12,7 @@
         "@chakra-ui/react": "^2.2.1",
         "@emotion/react": "^11.9.0",
         "@emotion/styled": "^11.8.1",
+        "@faker-js/faker": "^7.2.0",
         "@google-cloud/bigquery": "^6.0.0",
         "@google-cloud/storage": "^6.1.0",
         "axios": "^0.27.2",
@@ -22,7 +23,8 @@
         "react": "18.1.0",
         "react-day-picker": "^8.0.6",
         "react-dom": "18.1.0",
-        "react-icons": "^4.4.0"
+        "react-icons": "^4.4.0",
+        "uuidv4": "^6.2.13"
     },
     "devDependencies": {
         "@types/jest": "^28.1.1",
