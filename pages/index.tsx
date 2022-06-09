@@ -13,11 +13,11 @@ import Workbench from '../components/Workbench';
 const Home: NextPage = () => {
     const [datasets, setDatasets] = useState<Dataset[]>([]);
     const [datasetsLoaded, setDatasetsLoaded] = useState(false);
-    const [selectedDataset, selectDataset] = useState<string>('');
+    const [dataset, setDataset] = useState<string>('');
 
     const [tables, setTables] = useState<Table[]>([]);
     const [tablesLoaded, setTablesLoaded] = useState(true);
-    const [selectedTable, selectTable] = useState<string>('');
+    const [table, setTable] = useState<string>('');
 
     useEffect(() => {
         apiClient()
@@ -30,16 +30,17 @@ const Home: NextPage = () => {
 
     useEffect(() => {
         setTablesLoaded(false);
-        selectedDataset &&
+        setTable('');
+        dataset &&
             apiClient()
-                .get<Table[]>(`/dataset/${selectedDataset}`)
+                .get<Table[]>(`/dataset/${dataset}`)
                 .then(({ data }) => {
                     setTables(data);
                     setTablesLoaded(true);
                 })
                 .finally(() => setTablesLoaded(true));
-        !selectedDataset && setTablesLoaded(true);
-    }, [selectedDataset]);
+        !dataset && setTablesLoaded(true);
+    }, [dataset]);
 
     return (
         <HStack
@@ -52,7 +53,7 @@ const Home: NextPage = () => {
                 items={datasets}
                 iconFn={() => FaDatabase}
                 loading={datasetsLoaded}
-                handleSelect={selectDataset}
+                handleSelect={setDataset}
             />
             <List
                 items={tables}
@@ -65,9 +66,9 @@ const Home: NextPage = () => {
                         : SiGooglesheets
                 }
                 loading={tablesLoaded}
-                handleSelect={selectTable}
+                handleSelect={setTable}
             />
-            <Workbench table={selectedTable} />
+            <Workbench dataset={dataset} table={table} />
         </HStack>
     );
 };

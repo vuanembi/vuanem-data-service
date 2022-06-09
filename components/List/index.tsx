@@ -30,7 +30,7 @@ const List = <T extends Dataset | Table>({
     }, [items, searchTerm]);
 
     return (
-        <VStack maxH="full" w="full" flex="0 0 33%" alignItems="stretch">
+        <VStack maxH="full" flex="0 0 33%" alignItems="stretch">
             <Search onChange={(e) => setSearchTerm(e.target.value)} />
             <VStack overflowY="auto">
                 <Skeleton w="full" isLoaded={loading} height="800px">

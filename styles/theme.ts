@@ -8,7 +8,6 @@ export default extendTheme({
     styles: {
         global: {
             '*:not(svg)': {
-                color: 'gray.800',
                 borderStyle: 'solid',
                 borderRadius: 'md',
             },
@@ -45,6 +44,14 @@ export default extendTheme({
         Link: {
             baseStyle: {
                 textDecor: 'underline',
+            },
+            variants: {
+                button: {
+                    textDecor: 'none',
+                    _hover: {
+                        textDecor: 'none'
+                    }
+                },
             },
         },
     },

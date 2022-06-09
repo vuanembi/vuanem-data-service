@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction, useState } from 'react';
+import { FC, MouseEventHandler, useState } from 'react';
 
 import {
     VStack,
@@ -9,29 +9,20 @@ import {
     Button,
 } from '@chakra-ui/react';
 import { DateRange } from 'react-day-picker';
-import { format } from 'date-fns';
 
 import { FaCloudUploadAlt } from 'react-icons/fa';
 
 import PopoverDatePicker, { defaultDateRange } from './DatePicker';
 
 type RequestProps = {
-    table: string;
-    setJob: Dispatch<SetStateAction<string>>;
+    title: string;
+    disabled: boolean;
+    loading: boolean;
+    onClick: MouseEventHandler;
 };
 
-const Request: FC<RequestProps> = ({ table, setJob }) => {
+const Request: FC<RequestProps> = ({ title, disabled, loading, onClick }) => {
     const [range, setRange] = useState<DateRange | undefined>(defaultDateRange);
-
-    const [loading, setLoading] = useState(false);
-
-    const handleRequest = () => {
-        setLoading(true);
-        setTimeout(() => {
-            setJob(format(new Date(), 'yyyy-MM-ddTHH:mm:ss.SSS'));
-            setLoading(false);
-        }, 1000);
-    };
 
     return (
         <VStack
@@ -43,17 +34,18 @@ const Request: FC<RequestProps> = ({ table, setJob }) => {
             p={4}
             spacing={4}
         >
-            <Heading size="md">{table || 'Table'}</Heading>
+            <Heading size="md">{title || '...'}</Heading>
             <Divider />
             <HStack justifyContent="stretch">
                 <PopoverDatePicker range={range} setRange={setRange} />
             </HStack>
             <Flex w="full" justifyContent="flex-end">
                 <Button
+                    isDisabled={disabled}
                     rightIcon={<FaCloudUploadAlt fill="white" />}
                     colorScheme="blue"
                     isLoading={loading}
-                    onClick={handleRequest}
+                    onClick={onClick}
                 >
                     Request
                 </Button>
