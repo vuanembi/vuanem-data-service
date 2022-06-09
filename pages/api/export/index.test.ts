@@ -1,11 +1,12 @@
+import axios from 'axios';
+
 import { createExportJob } from '.';
 
 it('create export job', async () => {
     return createExportJob('IP_NetSuite', 'CLASSES')
         .then((url) => {
-            expect(url).toBeTruthy();
+            console.log(url);
+            return axios.get(url);
         })
-        .catch((err) => {
-            console.log(err);
-        });
+        .then((res) => expect(res.status).toBe(200));
 });
