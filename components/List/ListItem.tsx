@@ -41,7 +41,7 @@ const ListItem = <T extends Dataset | Table>({
         >
             <Icon as={iconFn(item)} fill={textColor} />
             <Text pl={4} userSelect="none" flex="1" color={textColor}>
-                {item.id.slice(0, 15)}
+                {item.id.slice(0, 25)}
             </Text>
             <Icon as={FaChevronRight} fill={textColor} />
         </HStack>
