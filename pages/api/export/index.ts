@@ -82,10 +82,24 @@ export const createExportJob = async (
         return destination.extract(file, { location: 'us' }).then(() => url);
     });
 };
-// const handler = (req: NextApiRequest, res: NextApiResponse<Dataset[]>) => {
-//     listDatasets()
-//         .then((datasets) => res.json(datasets))
-//         .catch(() => res.json([]));
-// };
 
-// export default handler;
+const handler = (
+    req: NextApiRequest,
+    res: NextApiResponse<{ url: string }>
+) => {
+    if (req.method !== 'POST') {
+        res.status(405).end();
+    }
+
+    const { dataset, table }: { dataset?: string; table?: string } = req.body;
+
+    if (!dataset || !table) {
+        res.status(401).end();
+    }
+
+    createExportJob(<string>dataset, <string>table)
+        .then((url) => res.json({ url }))
+        .catch((err) => res.status(500).send(err));
+};
+
+export default handler;
