@@ -2,21 +2,21 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { BigQuery } from '@google-cloud/bigquery';
 
-export const listDataset = async () => {
+import type { Dataset } from '../../../common/bigquery';
+
+export const listDatasets = async (): Promise<Dataset[]> => {
     const client = new BigQuery();
 
     return client
         .getDatasets()
         .then(([datasets]) => datasets)
-        .then((datasets) => datasets.map(({ id }) => id));
+        .then((datasets) => datasets.map(({ id }) => <Dataset>{ id }));
 };
 
-const handler = (req: NextApiRequest, res: NextApiResponse<string[]>) => {
-    listDataset().then((datasetIds) =>
-        datasetIds.every((i): i is string => !!i)
-            ? res.json(datasetIds)
-            : res.json([])
-    );
+const handler = (req: NextApiRequest, res: NextApiResponse<Dataset[]>) => {
+    listDatasets()
+        .then((datasets) => res.json(datasets))
+        .catch(() => res.json([]));
 };
 
 export default handler;

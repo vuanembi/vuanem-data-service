@@ -1,5 +1,5 @@
-import { listDataset } from '.';
+import { listDatasets } from '.';
 
 it('return all datasets', async () => {
-    return listDataset().then((datasets) => expect(datasets).toBeTruthy());
+    return listDatasets().then((datasets) => expect(datasets).toBeTruthy());
 });

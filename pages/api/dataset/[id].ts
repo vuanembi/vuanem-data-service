@@ -1,15 +1,32 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import mock from '../mock.json';
+import { BigQuery } from '@google-cloud/bigquery';
 
-export type Table = {
-    id: string;
+import type { Table } from '../../../common/bigquery';
+
+export const listTables = async (datasetId: string): Promise<Table[]> => {
+    const client = new BigQuery();
+
+    return client
+        .dataset(datasetId)
+        .getTables()
+        .then(([tables]) => tables)
+        .then((tables) =>
+            tables.map(
+                (table): Table => ({
+                    id: <string>table.id,
+                    type: table.metadata.type,
+                })
+            )
+        );
 };
 
-const handler = (req: NextApiRequest, res: NextApiResponse<Table[]>) => {
-    const tables = mock.dataset.find(({ id }) => id === req.query.id)?.tables;
-
-    tables ? res.json(tables) : res.status(404).end();
+const handler = (req: NextApiRequest, res: NextApiResponse) => {
+    req.query.id
+        ? listTables(<string>req.query.id)
+              .then((tables) => res.json(tables))
+              .then(() => res.json([]))
+        : res.status(404).end();
 };
 
 export default handler;
