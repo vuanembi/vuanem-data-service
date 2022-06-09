@@ -1,24 +1,29 @@
-import { FC, useState, useEffect, Dispatch, SetStateAction } from 'react';
+import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 
 import { VStack } from '@chakra-ui/react';
-import { IconType } from 'react-icons';
 
-import ListItem from './ListItem';
+import type { Dataset, Table } from '../../common/bigquery';
+
+import ListItem, { ListItemProps } from './ListItem';
 import Search from './Search';
 
-type ListProps = {
-    items: string[];
-    icon: IconType;
+type ListProps<T extends Dataset | Table> = {
+    items: ListItemProps<T>['item'][];
+    iconFn: ListItemProps<T>['iconFn'];
     handleSelect: Dispatch<SetStateAction<string>>;
 };
 
-const List: FC<ListProps> = ({ items, icon, handleSelect }) => {
+const List = <T extends Dataset | Table>({
+    items,
+    iconFn,
+    handleSelect,
+}: ListProps<T>) => {
     const [itemList, setItemList] = useState(items);
     const [searchTerm, setSearchTerm] = useState('');
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
     useEffect(() => {
-        setItemList(items.filter((id) => id.match(searchTerm)));
+        setItemList(items.filter(({ id }) => id.match(searchTerm)));
         setActiveIndex(null);
     }, [items, searchTerm]);
 
@@ -30,7 +35,7 @@ const List: FC<ListProps> = ({ items, icon, handleSelect }) => {
                     <ListItem
                         key={i}
                         item={item}
-                        icon={icon}
+                        iconFn={iconFn}
                         active={i === activeIndex ? true : false}
                         setActiveIndex={() => setActiveIndex(i)}
                         setSelection={handleSelect}

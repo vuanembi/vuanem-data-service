@@ -1,26 +1,28 @@
-import { FC, Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 import { HStack, Icon, Text } from '@chakra-ui/react';
 import { IconType } from 'react-icons';
 import { FaChevronRight } from 'react-icons/fa';
 
-export type ListItemProps = {
-    item: string;
-    icon: IconType;
+import type { Dataset, Table } from '../../common/bigquery';
+
+export type ListItemProps<T extends Dataset | Table> = {
+    item: T;
+    iconFn: <T>(item: T) => IconType;
     active: boolean;
     setActiveIndex: () => void;
     setSelection: Dispatch<SetStateAction<string>>;
 };
 
-const ListItem: FC<ListItemProps> = ({
+const ListItem = <T extends Dataset | Table>({
     item,
-    icon,
+    iconFn,
     active,
     setActiveIndex,
     setSelection,
-}) => {
+}: ListItemProps<T>) => {
     const onClick = () => {
-        setSelection(item);
+        setSelection(item.id);
         setActiveIndex();
     };
 
@@ -37,14 +39,9 @@ const ListItem: FC<ListItemProps> = ({
             alignContent="stretch"
             onClick={onClick}
         >
-            <Icon as={icon} fill={textColor} />
-            <Text
-                pl={4}
-                userSelect="none"
-                flex="1"
-                color={textColor}
-            >
-                {item.slice(0, 15)}
+            <Icon as={iconFn(item)} fill={textColor} />
+            <Text pl={4} userSelect="none" flex="1" color={textColor}>
+                {item.id.slice(0, 15)}
             </Text>
             <Icon as={FaChevronRight} fill={textColor} />
         </HStack>
