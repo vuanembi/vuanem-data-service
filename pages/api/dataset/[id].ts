@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import mock from './mock.json';
+import mock from '../mock.json';
 
 export type Table = {
     id: string;

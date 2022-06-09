@@ -12,13 +12,10 @@ type Table = {
     id: string;
 };
 
-type Dataset = {
-    id: string;
-    tables: Table[];
-};
+type DatasetId = string;
 
 const Home: NextPage = () => {
-    const [datasets, setDatasets] = useState<Dataset[]>([]);
+    const [datasets, setDatasets] = useState<DatasetId[]>([]);
     const [selectedDataset, selectDataset] = useState('');
 
     const [tables, setTables] = useState<Table[]>([]);
@@ -26,13 +23,13 @@ const Home: NextPage = () => {
 
     useEffect(() => {
         axios
-            .get<Dataset[]>('/api/datasets')
+            .get<DatasetId[]>('/api/dataset')
             .then(({ data }) => setDatasets(data));
     }, []);
 
     useEffect(() => {
         axios
-            .get<Table[]>('/api/dataset', { params: { id: selectedDataset } })
+            .get<Table[]>(`/api/dataset/${selectedDataset}`)
             .then(({ data }) => setTables(data));
     }, [selectedDataset]);
 
@@ -48,7 +45,7 @@ const Home: NextPage = () => {
                 icon={FaDatabase}
                 handleSelect={selectDataset}
             />
-            <List items={tables} icon={FaTable} handleSelect={selectTable} />
+            {/* <List items={tables} icon={FaTable} handleSelect={selectTable} /> */}
             <Workbench table={selectedTable} />
         </HStack>
     );

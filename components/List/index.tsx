@@ -3,11 +3,11 @@ import { FC, useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { VStack } from '@chakra-ui/react';
 import { IconType } from 'react-icons';
 
-import ListItem, { ListItemType } from './ListItem';
+import ListItem from './ListItem';
 import Search from './Search';
 
 type ListProps = {
-    items: ListItemType[];
+    items: string[];
     icon: IconType;
     handleSelect: Dispatch<SetStateAction<string>>;
 };
@@ -18,7 +18,7 @@ const List: FC<ListProps> = ({ items, icon, handleSelect }) => {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
     useEffect(() => {
-        setItemList(items.filter(({ id }) => id.match(searchTerm)));
+        setItemList(items.filter((id) => id.match(searchTerm)));
         setActiveIndex(null);
     }, [items, searchTerm]);
 
