@@ -28,7 +28,7 @@ const ListItem: FC<ListItemProps> = ({
         setActiveIndex();
     };
 
-    const bgColor = active ? 'blue.600' : 'transparent';
+    const bgColor = active ? 'blue.500' : 'transparent';
     const textColor = active ? 'white' : 'black';
 
     return (
