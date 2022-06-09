@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState, useEffect } from 'react';
 
 import { VStack } from '@chakra-ui/react';
 
@@ -10,10 +10,12 @@ type WorkbenchProps = {
 };
 
 const Workbench: FC<WorkbenchProps> = ({ table }) => {
+    const [job, setJob] = useState('')
+
     return (
         <VStack w="full">
-            <Request table={table} />
-            <Job />
+            <Request table={table} setJob={setJob}/>
+            <Job job={job}/>
         </VStack>
     );
 };
