@@ -1,6 +1,11 @@
 import axios from 'axios';
 
-import { createExportJob } from '.';
+import { generateId, createExportJob } from '.';
+
+it('generate random id', () => {
+    const id = generateId()
+    expect(id).toBeTruthy()
+})
 
 it('create export job', async () => {
     return createExportJob('IP_NetSuite', 'CLASSES')

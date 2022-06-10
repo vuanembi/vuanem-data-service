@@ -13,10 +13,10 @@ import type {
 const tempBucket = 'vuanem-export';
 const tempDatasetId = 'temp_Export';
 
-const generateId = () => {
-    const char = faker.lorem
-        .slug()
-        .split('-')
+export const generateId = () => {
+    const char = faker.commerce
+        .productName()
+        .split(' ')
         .map((i) => i.slice(0, 1).toUpperCase() + i.slice(1))
         .join('');
     const num = faker.datatype.number({ min: 1000, max: 9999 });
