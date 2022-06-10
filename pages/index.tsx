@@ -74,4 +74,10 @@ const Home: NextPage = () => {
     );
 };
 
+export const getStaticProps = async () => ({
+    props: {
+        title: 'Data Service',
+    },
+});
+
 export default Home;
