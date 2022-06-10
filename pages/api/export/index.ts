@@ -4,6 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { BigQuery, Job } from '@google-cloud/bigquery';
 import { Storage, File } from '@google-cloud/storage';
 import { faker } from '@faker-js/faker';
+import { capitalize } from 'lodash';
 
 const tempBucket = 'vuanem-export';
 const tempDatasetId = 'temp_Export';
@@ -12,7 +13,7 @@ export const generateId = () => {
     const char = faker.commerce
         .productName()
         .split(' ')
-        .map((i) => i.slice(0, 1).toUpperCase() + i.slice(1))
+        .map((i) => capitalize(i))
         .join('');
     const num = faker.datatype.number({ min: 1000, max: 9999 });
 
