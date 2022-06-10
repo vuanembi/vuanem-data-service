@@ -34,7 +34,7 @@ jobs:
       - id: set-vars
         run: |
           echo "::set-output name=service::${{ env.service }}"
-          echo "::set-output name=image::gcr.io/${{ env.PROJECT_ID }}/${{ env.NAME }}:${{ github.ref_name }}"
+          echo "::set-output name=image::us-docker.pkg.dev/${{ env.PROJECT_ID }}/gcr.io/${{ env.NAME }}:${{ github.ref_name }}"
 
       - run: |
           echo "SENDER_PWD: ${{ secrets.SENDER_PWD }}" >> ${{ env.ENV_FILE }}
@@ -60,7 +60,7 @@ jobs:
 
       - uses: google-github-actions/setup-gcloud@v0
 
-      - run: gcloud auth configure-docker
+      - run: gcloud auth configure-docker us-docker.pkg.dev
 
       - run: docker build --push -t ${{ needs.set-env.outputs.image }} .
 
@@ -85,7 +85,6 @@ jobs:
       - run: >-
           gcloud run deploy ${{ needs.set-env.outputs.service }}
           --image=${{ needs.set-env.outputs.image }}
-          --concurrency=1
           --memory=2Gi
           --cpu=2
           --platform=managed
