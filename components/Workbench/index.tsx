@@ -51,6 +51,14 @@ const Workbench: FC<WorkbenchProps> = ({ dataset, table }) => {
                     isClosable: true,
                 })
             )
+            .catch(() =>
+                toast({
+                    title: 'Export Error',
+                    status: 'error',
+                    duration: 4000,
+                    isClosable: true,
+                })
+            )
             .finally(() => setLoading(false));
     };
 
