@@ -2,9 +2,9 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { BigQuery } from '@google-cloud/bigquery';
 
-import type { Table } from '../../../common/bigquery';
+import type { Entity } from '../../../common/bigquery';
 
-export const listTables = async (datasetId: string): Promise<Table[]> => {
+export const listTables = async (datasetId: string): Promise<Entity[]> => {
     const client = new BigQuery();
 
     return client
@@ -12,12 +12,10 @@ export const listTables = async (datasetId: string): Promise<Table[]> => {
         .getTables()
         .then(([tables]) => tables)
         .then((tables) =>
-            tables.map(
-                (table): Table => ({
-                    id: <string>table.id,
-                    type: table.metadata.type,
-                })
-            )
+            tables.map((table) => ({
+                id: <string>table.id,
+                type: table.metadata.type,
+            }))
         );
 };
 

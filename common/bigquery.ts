@@ -1,8 +1,4 @@
-export type Dataset = {
+export type Entity = {
     id: string;
-};
-
-export type Table = {
-    id: string;
-    type: 'TABLE' | 'VIEW' | 'EXTERNAL';
+    type?: 'TABLE' | 'VIEW' | 'EXTERNAL';
 };

@@ -4,23 +4,23 @@ import { HStack, Icon, Text } from '@chakra-ui/react';
 import { IconType } from 'react-icons';
 import { FaChevronRight } from 'react-icons/fa';
 
-import type { Dataset, Table } from '../../common/bigquery';
+import type { Entity } from '../../common/bigquery';
 
-export type ListItemProps<T extends Dataset | Table> = {
-    item: T;
-    iconFn: <T>(item: T) => IconType;
+export type ListItemProps = {
+    item: Entity;
+    iconFn: (item: Entity) => IconType;
     active: boolean;
     setActiveIndex: () => void;
     setSelection: Dispatch<SetStateAction<string>>;
 };
 
-const ListItem = <T extends Dataset | Table>({
+const ListItem = ({
     item,
     iconFn,
     active,
     setActiveIndex,
     setSelection,
-}: ListItemProps<T>) => {
+}: ListItemProps) => {
     const onClick = () => {
         setSelection(item.id);
         setActiveIndex();

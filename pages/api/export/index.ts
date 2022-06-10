@@ -5,11 +5,6 @@ import { BigQuery, Job } from '@google-cloud/bigquery';
 import { Storage, File } from '@google-cloud/storage';
 import { faker } from '@faker-js/faker';
 
-import type {
-    Dataset as DatasetType,
-    Table as TableType,
-} from '../../../common/bigquery';
-
 const tempBucket = 'vuanem-export';
 const tempDatasetId = 'temp_Export';
 
@@ -68,10 +63,7 @@ const createDestinationTable = async (
     return destination;
 };
 
-export const createExportJob = async (
-    dataset: DatasetType['id'],
-    table: TableType['id']
-) => {
+export const createExportJob = async (dataset: string, table: string) => {
     const id = generateId();
 
     return Promise.all([

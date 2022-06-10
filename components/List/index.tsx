@@ -2,24 +2,17 @@ import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 
 import { VStack, Skeleton } from '@chakra-ui/react';
 
-import type { Dataset, Table } from '../../common/bigquery';
-
 import ListItem, { ListItemProps } from './ListItem';
 import Search from './Search';
 
-type ListProps<T extends Dataset | Table> = {
-    items: ListItemProps<T>['item'][];
-    iconFn: ListItemProps<T>['iconFn'];
+type ListProps = {
+    items: ListItemProps['item'][];
+    iconFn: ListItemProps['iconFn'];
     loading: boolean;
     handleSelect: Dispatch<SetStateAction<string>>;
 };
 
-const List = <T extends Dataset | Table>({
-    items,
-    iconFn,
-    loading,
-    handleSelect,
-}: ListProps<T>) => {
+const List = ({ items, iconFn, loading, handleSelect }: ListProps) => {
     const [itemList, setItemList] = useState(items);
     const [searchTerm, setSearchTerm] = useState('');
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
