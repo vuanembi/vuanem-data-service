@@ -18,7 +18,11 @@ const List = ({ items, iconFn, loaded, handleSelect }: ListProps) => {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
     useEffect(() => {
-        setItemList(items.filter(({ id }) => id.match(searchTerm)));
+        setItemList(
+            items.filter(({ id }) =>
+                id.toLowerCase().match(searchTerm.toLowerCase())
+            )
+        );
         setActiveIndex(null);
     }, [items, searchTerm]);
 
