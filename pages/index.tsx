@@ -54,7 +54,7 @@ const Home: NextPage = () => {
             <List
                 items={datasets}
                 iconFn={() => FaDatabase}
-                loading={datasetsLoaded}
+                loaded={datasetsLoaded}
                 handleSelect={setDataset}
             />
             <List
@@ -66,7 +66,7 @@ const Home: NextPage = () => {
                         ? FaChartBar
                         : SiGooglesheets
                 }
-                loading={tablesLoaded}
+                loaded={tablesLoaded}
                 handleSelect={setTable}
             />
             <Workbench dataset={dataset} table={table} />

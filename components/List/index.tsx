@@ -8,11 +8,11 @@ import Search from './Search';
 type ListProps = {
     items: ListItemProps['item'][];
     iconFn: ListItemProps['iconFn'];
-    loading: boolean;
+    loaded: boolean;
     handleSelect: Dispatch<SetStateAction<string>>;
 };
 
-const List = ({ items, iconFn, loading, handleSelect }: ListProps) => {
+const List = ({ items, iconFn, loaded, handleSelect }: ListProps) => {
     const [itemList, setItemList] = useState(items);
     const [searchTerm, setSearchTerm] = useState('');
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -26,7 +26,7 @@ const List = ({ items, iconFn, loading, handleSelect }: ListProps) => {
         <VStack maxH="full" flex="0 0 33%" alignItems="stretch">
             <Search onChange={(e) => setSearchTerm(e.target.value)} />
             <VStack overflowY="auto">
-                <Skeleton w="full" isLoaded={loading} height="800px">
+                <Skeleton w="full" isLoaded={loaded} height="800px">
                     <VStack overflowY="auto">
                         {itemList.map((item, i) => (
                             <ListItem
