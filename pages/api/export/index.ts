@@ -98,7 +98,7 @@ const handler = (
     createExportJob(dataset, table)
         .then((url) => res.json({ url }))
         .catch((err) => {
-            console.log(JSON.stringify(err));
+            console.log(err);
             res.status(500).send(err);
         });
 };
