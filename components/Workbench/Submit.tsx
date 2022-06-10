@@ -34,7 +34,7 @@ const Submit: FC<SubmitProps> = ({ title, disabled, loading, onClick }) => {
             p={4}
             spacing={4}
         >
-            <Heading size="md">{title || '...'}</Heading>
+            <Heading size="sm">{title || '...'}</Heading>
             <Divider />
             <HStack spacing={4} justifyContent="stretch">
                 <PopoverDatePicker range={range} setRange={setRange} />

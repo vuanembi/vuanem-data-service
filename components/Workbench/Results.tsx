@@ -27,7 +27,7 @@ const Result: FC<ResultProps> = ({ title, timestamp, url }) => {
 
     useEffect(() => {
         setInterval(() => setCurrentTimestamp(dayjs()), 1000);
-    });
+    }, []);
 
     useEffect(() => {
         setDiff(timestamp.add(1, 'hours').diff(dayjs(), 'seconds'));
@@ -65,11 +65,9 @@ const Results: FC<{ results: ResultProps[] }> = ({ results }) => (
         divider={<Divider />}
         overflowY="auto"
     >
-        {results.map(
-            (result, i) => (
-                <Result key={i} {...result} />
-            )
-        )}
+        {results.map((result, i) => (
+            <Result key={i} {...result} />
+        ))}
     </VStack>
 );
 export default Results;
