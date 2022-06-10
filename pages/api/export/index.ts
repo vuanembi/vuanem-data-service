@@ -5,6 +5,7 @@ import { BigQuery, Job } from '@google-cloud/bigquery';
 import { Storage, File } from '@google-cloud/storage';
 import { faker } from '@faker-js/faker';
 import { capitalize } from 'lodash';
+import dayjs from 'dayjs';
 
 const tempBucket = 'vuanem-export';
 const tempDatasetId = 'temp_Export';
@@ -50,7 +51,10 @@ const createDestinationTable = async (
     const tempDataset = bigquery.dataset(tempDatasetId);
 
     const destination = await tempDataset
-        .createTable(id, { location: 'us' })
+        .createTable(id, {
+            location: 'us',
+            expirationTime: dayjs().add(5, 'minutes').valueOf().toString(),
+        })
         .then(() => tempDataset.table(id));
 
     await bigquery
