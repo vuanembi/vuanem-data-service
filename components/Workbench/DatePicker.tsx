@@ -35,7 +35,7 @@ const PopoverDatePicker: FC<DatePickerProps> = ({ range, setRange }) => {
     return (
         <Popover>
             <PopoverTrigger>
-                <Button w="full" leftIcon={<Icon as={FaRegCalendarAlt} />}>
+                <Button flex="1" leftIcon={<Icon as={FaRegCalendarAlt} />}>
                     {[from, to]
                         .map(
                             (value) =>

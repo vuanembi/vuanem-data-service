@@ -36,10 +36,8 @@ const Submit: FC<SubmitProps> = ({ title, disabled, loading, onClick }) => {
         >
             <Heading size="md">{title || '...'}</Heading>
             <Divider />
-            <HStack justifyContent="stretch">
+            <HStack spacing={4} justifyContent="stretch">
                 <PopoverDatePicker range={range} setRange={setRange} />
-            </HStack>
-            <Flex w="full" justifyContent="flex-end">
                 <Button
                     isDisabled={disabled}
                     rightIcon={<FaCloudUploadAlt fill="white" />}
@@ -47,8 +45,10 @@ const Submit: FC<SubmitProps> = ({ title, disabled, loading, onClick }) => {
                     isLoading={loading}
                     onClick={onClick}
                 >
-                    Request
+                    Submit
                 </Button>
+            </HStack>
+            <Flex w="full" justifyContent="flex-end">
             </Flex>
         </VStack>
     );
