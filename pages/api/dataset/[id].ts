@@ -19,11 +19,16 @@ export const listTables = async (datasetId: string): Promise<Entity[]> => {
         );
 };
 
-const handler = (req: NextApiRequest, res: NextApiResponse) => {
-    req.query.id
-        ? listTables(<string>req.query.id)
-              .then((tables) => res.json(tables))
-              .catch(() => res.json([]))
+const handler = (
+    req: NextApiRequest,
+    res: NextApiResponse<{ id: Entity['id']; tables?: Entity[] }>
+) => {
+    const id = <string>req.query.id;
+
+    id
+        ? listTables(id)
+              .then((tables) => res.json({ id, tables }))
+              .catch(() => res.json({ id }))
         : res.status(404).end();
 };
 

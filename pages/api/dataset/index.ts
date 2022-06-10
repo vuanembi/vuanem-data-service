@@ -13,10 +13,13 @@ export const listDatasets = async (): Promise<Entity[]> => {
         .then((datasets) => datasets.map(({ id }) => <Entity>{ id }));
 };
 
-const handler = (req: NextApiRequest, res: NextApiResponse<Entity[]>) => {
+const handler = (
+    req: NextApiRequest,
+    res: NextApiResponse<{ datasets: Entity[] }>
+) => {
     listDatasets()
-        .then((datasets) => res.json(datasets))
-        .catch(() => res.json([]));
+        .then((datasets) => res.json({ datasets }))
+        .catch(() => res.json({ datasets: [] }));
 };
 
 export default handler;

@@ -21,9 +21,9 @@ const Home: NextPage = () => {
 
     useEffect(() => {
         apiClient()
-            .get<Entity[]>('/dataset')
+            .get<{ datasets: Entity[] }>('/dataset')
             .then(({ data }) => {
-                setDatasets(data);
+                setDatasets(data.datasets);
                 setDatasetsLoaded(true);
             });
     }, []);
@@ -33,9 +33,11 @@ const Home: NextPage = () => {
         setTable('');
         dataset &&
             apiClient()
-                .get<Entity[]>(`/dataset/${dataset}`)
+                .get<{ id: Entity['id']; tables: Entity[] }>(
+                    `/dataset/${dataset}`
+                )
                 .then(({ data }) => {
-                    setTables(data);
+                    setTables(data.tables);
                     setTablesLoaded(true);
                 })
                 .finally(() => setTablesLoaded(true));
