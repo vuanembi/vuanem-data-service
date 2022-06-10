@@ -93,6 +93,7 @@ jobs:
           --region=us-central1
           --timeout=900
           --env-vars-file=${{ env.ENV_FILE }}
+          --allow-unauthenticated
 
   clean-up:
     runs-on: ubuntu-latest
