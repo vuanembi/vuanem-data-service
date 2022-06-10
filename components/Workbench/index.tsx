@@ -62,7 +62,7 @@ const Workbench: FC<WorkbenchProps> = ({ dataset, table }) => {
                 loading={loading}
                 onClick={handleRequest}
             />
-            <Result results={results} />
+            {results.length > 0 && <Result results={results} />}
         </VStack>
     );
 };
