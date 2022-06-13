@@ -8,6 +8,7 @@ import {
     PopoverBody,
     PopoverArrow,
     Icon,
+    useToken,
 } from '@chakra-ui/react';
 import {
     DayPicker,
@@ -15,6 +16,7 @@ import {
     SelectRangeEventHandler,
 } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
+
 import { formatISO, getYear } from 'date-fns';
 
 import { FaRegCalendarAlt } from 'react-icons/fa';
@@ -57,7 +59,7 @@ const PopoverDatePicker: FC<DatePickerProps> = ({ range, setRange }) => {
                         onSelect={setRange}
                         modifiersStyles={{
                             selected: {
-                                backgroundColor: '#3182CE',
+                                backgroundColor: useToken('colors', 'blue.500'),
                             },
                         }}
                     />
