@@ -65,8 +65,8 @@ const Results: FC<{ results: ResultProps[] }> = ({ results }) => (
         divider={<Divider />}
         overflowY="auto"
     >
-        {results.map((result, i) => (
-            <Result key={i} {...result} />
+        {results.map((result) => (
+            <Result key={result.url} {...result} />
         ))}
     </VStack>
 );

@@ -34,7 +34,7 @@ const List = ({ items, iconFn, loaded, handleSelect }: ListProps) => {
                     <VStack overflowY="auto">
                         {itemList.map((item, i) => (
                             <ListItem
-                                key={i}
+                                key={item.id}
                                 item={item}
                                 iconFn={iconFn}
                                 active={i === activeIndex ? true : false}
