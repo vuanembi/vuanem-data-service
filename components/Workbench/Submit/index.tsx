@@ -3,7 +3,6 @@ import { FC, MouseEventHandler, useState } from 'react';
 import {
     VStack,
     HStack,
-    Flex,
     Divider,
     Heading,
     Button,
@@ -48,9 +47,8 @@ const Submit: FC<SubmitProps> = ({ title, disabled, loading, onClick }) => {
                     Submit
                 </Button>
             </HStack>
-            <Flex w="full" justifyContent="flex-end">
-            </Flex>
         </VStack>
     );
 };
+
 export default Submit;
