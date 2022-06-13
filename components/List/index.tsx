@@ -21,6 +21,10 @@ const List = ({ items, iconFn, loaded, handleSelect }: ListProps) => {
     });
 
     useEffect(() => {
+        setSearchTerm('');
+    }, [items]);
+
+    useEffect(() => {
         setItemList(
             items.filter(({ id }) =>
                 id.toLowerCase().match(searchTerm.toLowerCase())
@@ -30,7 +34,10 @@ const List = ({ items, iconFn, loaded, handleSelect }: ListProps) => {
 
     return (
         <VStack maxH="full" flex="0 0 33%" alignItems="stretch">
-            <Search onChange={(e) => setSearchTerm(e.target.value)} />
+            <Search
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+            />
             <VStack overflowY="auto">
                 <Skeleton w="full" isLoaded={loaded} height="800px">
                     <VStack overflowY="auto" {...getRootProps()}>
@@ -48,4 +55,5 @@ const List = ({ items, iconFn, loaded, handleSelect }: ListProps) => {
         </VStack>
     );
 };
+
 export default List;
