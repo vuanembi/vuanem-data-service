@@ -25,6 +25,7 @@ const Workbench: FC<WorkbenchProps> = ({ dataset, table }) => {
 
     useEffect(() => {
         dataset && table && setDisabled(false);
+        !dataset || (!table && setDisabled(true));
     }, [dataset, table]);
 
     const handleRequest = () => {
