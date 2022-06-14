@@ -3,12 +3,11 @@ import { FC, useEffect, useState } from 'react';
 import { VStack, useToast } from '@chakra-ui/react';
 
 import dayjs from 'dayjs';
-import { format } from 'date-fns';
 
 import apiClient from '../../lib/api';
 import Submit from './Submit';
-import Result from './Results';
-import type { ResultProps } from './Results';
+import Results from './Results';
+import { ResultItemProps } from './Results/ResultItem';
 
 type WorkbenchProps = {
     dataset: string;
@@ -18,7 +17,7 @@ type WorkbenchProps = {
 const Workbench: FC<WorkbenchProps> = ({ dataset, table }) => {
     const [disabled, setDisabled] = useState(true);
     const [loading, setLoading] = useState(false);
-    const [results, setResults] = useState<ResultProps[]>([]);
+    const [results, setResults] = useState<ResultItemProps[]>([]);
 
     const title = () => `${dataset}.${table}`.slice(0, 30);
 
@@ -26,6 +25,7 @@ const Workbench: FC<WorkbenchProps> = ({ dataset, table }) => {
 
     useEffect(() => {
         dataset && table && setDisabled(false);
+        !dataset || (!table && setDisabled(true));
     }, [dataset, table]);
 
     const handleRequest = () => {
@@ -70,7 +70,7 @@ const Workbench: FC<WorkbenchProps> = ({ dataset, table }) => {
                 loading={loading}
                 onClick={handleRequest}
             />
-            {results.length > 0 && <Result results={results} />}
+            {results.length > 0 && <Results results={results} />}
         </VStack>
     );
 };

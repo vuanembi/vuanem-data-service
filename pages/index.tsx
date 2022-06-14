@@ -13,11 +13,11 @@ import Workbench from '../components/Workbench';
 const Home: NextPage = () => {
     const [datasets, setDatasets] = useState<Entity[]>([]);
     const [datasetsLoaded, setDatasetsLoaded] = useState(false);
-    const [dataset, setDataset] = useState<string>('');
+    const [dataset, setDataset] = useState('');
 
     const [tables, setTables] = useState<Entity[]>([]);
     const [tablesLoaded, setTablesLoaded] = useState(true);
-    const [table, setTable] = useState<string>('');
+    const [table, setTable] = useState('');
 
     useEffect(() => {
         apiClient()

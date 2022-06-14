@@ -1,4 +1,4 @@
-import { FC, ChangeEvent } from 'react';
+import { FC } from 'react';
 
 import {
     Flex,
@@ -6,20 +6,17 @@ import {
     InputLeftElement,
     Input,
     Icon,
+    InputProps,
 } from '@chakra-ui/react';
 import { FaSearch } from 'react-icons/fa';
 
-export type SearchProps = {
-    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-};
-
-const Search: FC<SearchProps> = ({ onChange }) => (
+const Search: FC<InputProps> = ({ value, onChange }) => (
     <Flex w="full" p={4} borderWidth={1}>
         <InputGroup>
             <InputLeftElement>
                 <Icon as={FaSearch} />
             </InputLeftElement>
-            <Input placeholder="Search" onChange={onChange} />
+            <Input placeholder="Search" value={value} onChange={onChange} />
         </InputGroup>
     </Flex>
 );

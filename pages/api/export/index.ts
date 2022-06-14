@@ -91,7 +91,7 @@ const handler = (
     const { dataset, table }: { dataset?: string; table?: string } = req.body;
 
     if (!dataset || !table) {
-        res.status(401).end();
+        res.status(400).end();
         return;
     }
 
