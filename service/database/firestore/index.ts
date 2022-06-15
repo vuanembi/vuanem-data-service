@@ -11,7 +11,7 @@ const client = new Firestore();
 export type { Entity };
 
 export class Repository<T extends Entity> {
-    collection: CollectionReference;
+    protected collection: CollectionReference;
 
     constructor(collection: string) {
         this.collection = client.collection(collection);
@@ -28,7 +28,18 @@ export class Repository<T extends Entity> {
             .then((res) => res.id);
     }
 
-    async get(id: string): Promise<T> {
+    async find(): Promise<T[]> {
+        let results: T[] = [];
+
+        return this.collection
+            .get()
+            .then((docs) =>
+                docs.forEach((doc) => (results = [...results, <T>doc.data()]))
+            )
+            .then(() => results);
+    }
+
+    async findOne(id: string): Promise<T> {
         return this.collection
             .doc(id)
             .get()
@@ -43,6 +54,6 @@ export class Repository<T extends Entity> {
     }
 
     async delete(id: string) {
-        return this.update(id, { isDeleted: true });
+        return this.update(id, <Partial<T>>{ isDeleted: true });
     }
 }
